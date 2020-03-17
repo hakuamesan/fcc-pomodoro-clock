@@ -1,0 +1,54 @@
+*{
+ // outline: 1px solid red;
+}
+
+html {
+  text-align:center;
+}
+
+#pomodoro {
+  display: grid;
+  grid-template-columns: auto auto  ;
+  grid-template-rows: auto auto;
+  grid-gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+  width: 80%;
+  text-align: center;
+}
+
+#timer-label, #timer{
+  grid-column: 1/span 2;
+  
+}
+
+#timer {
+  font-size: 4rem;
+}
+
+#time-left{
+  font-size: 5rem;
+}
+
+
+#session-label{
+  font-size: 3rem;
+}
+
+#break-label{
+  font-size: 3rem;
+}
+
+button {
+  border-radius: 6px;
+  font-size: 2rem;
+  width: 40px;
+}
+
+#start_stop {
+  width: 100px;
+}
+
+#reset {
+  width: 100px;
+}

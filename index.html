@@ -1,0 +1,64 @@
+<link href="style.css" rel="stylesheet">
+
+<h1> Pomodoro Clock</h1>
+<h2> FCC JS Project </h2>
+
+<div id="main">
+  <div id="pomodoro">
+  
+    <div id="timer">
+    <div id="timer-label">
+      Start Timer
+    </div>
+    <div id="time-left">
+      25:00
+    </div>
+      <div id="sound">
+        <audio id="beep">
+          <source src="https://raw.githubusercontent.com/hakuamesan/fcc-pomodoro-clock/master/BeepSound.ogg" type="audio/ogg">
+          <source src="https://raw.githubusercontent.com/hakuamesan/fcc-pomodoro-clock/master/BeepSound.mp3" type="audio/mp3">
+          
+        </audio>
+      </div>
+    <div id="timer-control">
+      <button id="start_stop">Start</button>
+      <button id="reset">Reset</button>
+    </div>
+</div>
+    
+    <div id="settings">
+      <div id="session-label">
+      <div id="session-length">
+        25 
+      </div>
+      
+      <div id="session-controls">
+        <button id="session-increment">+</button>
+        <button id="session-decrement">-</button>
+      </div>
+    </div>
+    </div>
+    
+    <div id="break-label">
+      <div id="break-length">
+        5 
+      </div>
+      
+      <div id="break-controls">
+        <button id="break-increment">+</button>
+        <button id="break-decrement">-</button>
+      </div>
+    </div>
+  </div>  
+      
+    </div>
+    
+  </div>
+  
+</div>
+
+
+<div id="mocha"></div>
+
+<script src="script.js"></script>
+<script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
