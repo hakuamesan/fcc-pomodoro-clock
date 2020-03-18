@@ -1,9 +1,6 @@
 var session_time = 25;
 var break_time = 5;
-var cur_work_time = session_time;
-var cur_break_time = break_time;
 var minutes, seconds;
-var pause_min, pause_sec;
 
 var time_left = session_time;
 var timer;
@@ -34,23 +31,24 @@ function startTimer(duration) {
 
         completed = false;
 
-        if (--time < 0) {
-            console.log("showing zero");
-            document.getElementById("time-left").innerHTML = "00:00";
-            clearInterval(clock);
+        if (--time < -1) {
             playBeep(true);
+            clearInterval(clock);
 
             completed = true;
 
-            console.log("SetTimer isWork:" + isWork);
             console.log("time=" + time + " mins=" + minutes + " secs=" + seconds);
             if (isWork) {
                 time_left = break_time;
+                time_left = time_left < 10 ? "0" + time_left : time_left;
+                console.log("in timer: break time = " + time_left);
                 document.getElementById("time-left").innerHTML = time_left + ":00";
                 isWork = false;
                 startBreak();
             } else {
                 time_left = session_time;
+                time_left = time_left < 10 ? "0" + time_left : time_left;
+                console.log("in timer: session time = " + time_left);
                 document.getElementById("time-left").innerHTML = time_left + ":00";
                 isWork = true;
                 startWork();
@@ -125,12 +123,14 @@ function updateTimer() {
         if (pause) {
             if (completed) {
                 time_left = session_time;
+                time_left = time_left < 10 ? "0" + time_left : time_left;
                 document.getElementById("time-left").innerHTML = time_left + ":00";
 
             }
         } else {
             if (completed)
                 time_left = session_time;
+                time_left = time_left < 10 ? "0" + time_left : time_left;
             document.getElementById("time-left").innerHTML = time_left + ":00";
         }
     } else { //////// update Break time
@@ -184,6 +184,7 @@ document.getElementById("reset").addEventListener("click", () => {
     completed = true;
     time_left = session_time;
     isWork = true;
+
 
     document.getElementById("timer-label").innerHTML = "Start Timer";
     document.getElementById("time-left").innerHTML = time_left + ":00";
