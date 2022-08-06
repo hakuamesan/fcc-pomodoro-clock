@@ -23,9 +23,6 @@ function startTimer(duration) {
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        if (time == 0) console.log("show zero");
-        console.log("nope:time="+time + " mins="+minutes + " secs="+seconds);
-
   
         document.getElementById("time-left").innerHTML = minutes + ":" + seconds;
 
@@ -37,18 +34,15 @@ function startTimer(duration) {
 
             completed = true;
 
-            console.log("time=" + time + " mins=" + minutes + " secs=" + seconds);
             if (isWork) {
                 time_left = break_time;
                 time_left = time_left < 10 ? "0" + time_left : time_left;
-                console.log("in timer: break time = " + time_left);
                 document.getElementById("time-left").innerHTML = time_left + ":00";
                 isWork = false;
                 startBreak();
             } else {
                 time_left = session_time;
                 time_left = time_left < 10 ? "0" + time_left : time_left;
-                console.log("in timer: session time = " + time_left);
                 document.getElementById("time-left").innerHTML = time_left + ":00";
                 isWork = true;
                 startWork();
