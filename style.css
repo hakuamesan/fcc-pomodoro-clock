@@ -1,9 +1,16 @@
 *{
- // outline: 1px solid red;
+ /* outline: 1px solid red;*/
 }
 
 html {
   text-align:center;
+  background-color: #2196F3;
+}
+
+#main{
+  text-align: center;
+  text-justify: center;
+  padding: 10px;
 }
 
 #pomodoro {
@@ -11,9 +18,6 @@ html {
   grid-template-columns: auto auto  ;
   grid-template-rows: auto auto;
   grid-gap: 10px;
-  background-color: #2196F3;
-  padding: 10px;
-  width: 80%;
   text-align: center;
 }
 
@@ -28,6 +32,7 @@ html {
 
 #time-left{
   font-size: 5rem;
+  color: white;
 }
 
 
@@ -37,6 +42,11 @@ html {
 
 #break-label{
   font-size: 3rem;
+}
+
+#session-length, #break-length{
+	font-size: 3rem;
+	color: white;
 }
 
 button {
@@ -51,4 +61,8 @@ button {
 
 #reset {
   width: 100px;
+}
+
+#settings {
+  outline: 1px solid black;
 }
