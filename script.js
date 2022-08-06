@@ -1,141 +1,152 @@
-var session_time = 25;
-var break_time = 5;
-var minutes, seconds;
+let session_time = 25;
+let break_time = 5;
+let minutes, seconds;
 
-var time_left = session_time;
-var timer;
-var clock;
-var isWork = true;
-var pause = false;
-var completed = true;
+let time_left = session_time;
+let timer;
+let clock;
+let isWork = true;
+let pause = false;
+let completed = true;
 
+let debug = false;
 
 //////////  Start clock timer
 function startTimer(duration) {
-    var time = duration;
-    if (time < 0) console.log("Negative time!!!");
-    if (time === 0) console.log("time is zero!");
-    console.log("track timer: " + time);
+		var time = duration;
 
-    clock = setInterval(function() {
-        minutes = parseInt(time / 60, 10)
-        seconds = parseInt(time % 60, 10);
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
+		if (debug){
 
-  
-        document.getElementById("time-left").innerHTML = minutes + ":" + seconds;
+				if (time < 0) console.log("Negative time!!!");
+				if (time === 0) console.log("time is zero!");
+				console.log("track timer: " + time);
+		}
 
-        completed = false;
+		clock = setInterval(function() {
+				minutes = parseInt(time / 60, 10)
+				seconds = parseInt(time % 60, 10);
+				minutes = minutes < 10 ? "0" + minutes : minutes;
+				seconds = seconds < 10 ? "0" + seconds : seconds;
 
-        if (--time < -1) {
-            playBeep(true);
-            clearInterval(clock);
 
-            completed = true;
+				document.getElementById("time-left").innerHTML = minutes + ":" + seconds;
 
-            if (isWork) {
-                time_left = break_time;
-                time_left = time_left < 10 ? "0" + time_left : time_left;
-                document.getElementById("time-left").innerHTML = time_left + ":00";
-                isWork = false;
-                startBreak();
-            } else {
-                time_left = session_time;
-                time_left = time_left < 10 ? "0" + time_left : time_left;
-                document.getElementById("time-left").innerHTML = time_left + ":00";
-                isWork = true;
-                startWork();
-            }
-        }
-    }, 1000);
+				completed = false;
+
+				if (--time < -1) {
+						playBeep(true);
+						clearInterval(clock);
+
+						completed = true;
+
+						if (isWork) {
+								time_left = break_time;
+								time_left = time_left < 10 ? "0" + time_left : time_left;
+								document.getElementById("time-left").innerHTML = time_left + ":00";
+								isWork = false;
+								startBreak();
+						} else {
+								time_left = session_time;
+								time_left = time_left < 10 ? "0" + time_left : time_left;
+								document.getElementById("time-left").innerHTML = time_left + ":00";
+								isWork = true;
+								startWork();
+						}
+				}
+		}, 1000);
 }
 
 
 function startWork() {
-    document.getElementById("timer-label").innerHTML = "Start Working";
+		document.getElementById("timer-label").innerHTML = "Start Working";
 
-    var sTime;
+		var sTime;
 
-    console.log("Start Work: " + time_left);
-    console.log("Start mins=" + minutes + " secs=" + seconds);
-    console.log("Start completed=" + completed);
+		if (debug){
 
-    if (completed == true) {
-        sTime = time_left * 60;
-    } else
-        sTime = minutes * 60 + seconds;
+				console.log("Start Work: " + time_left);
+				console.log("Start mins=" + minutes + " secs=" + seconds);
+				console.log("Start completed=" + completed);
+		}
 
-    sTime--;
-    console.log("stime=" + sTime);
+		if (completed == true) 
+				sTime = time_left * 60;
+		else
+				sTime = minutes * 60 + seconds;
 
-    isWork = true;
-    startTimer(sTime);
+		sTime--;
+		if (debug) console.log("stime=" + sTime);
+
+		isWork = true;
+		startTimer(sTime);
 }
 
 function startBreak() {
-    document.getElementById("timer-label").innerHTML = "Take a break";
+		document.getElementById("timer-label").innerHTML = "Take a break";
 
-    console.log("Start Break: " + time_left);
-    console.log("Break mins=" + minutes + " secs=" + seconds);
-    console.log("Break completed=" + completed);
+		if (debug){
 
-    var bTime;
+				console.log("Start Break: " + time_left);
+				console.log("Break mins=" + minutes + " secs=" + seconds);
+				console.log("Break completed=" + completed);
+		}
 
-    if (completed == true)
-        bTime = time_left * 60;
-    else
-        bTime = break_time * 60;
+		var bTime;
 
-    bTime--;
-    console.log("bTime = " + bTime);
+		if (completed == true)
+				bTime = time_left * 60;
+		else
+				bTime = break_time * 60;
 
-    completed = false;
-    isWork = false;
-    startTimer(bTime);
+		bTime--;
+		if (debug) console.log("bTime = " + bTime);
+
+		completed = false;
+		isWork = false;
+		startTimer(bTime);
 }
 
 ///// Sound: True: play  False: stop
 function playBeep(sound) {
-    var beep = document.getElementById("beep");
-    if (sound) {
-        beep.play();
-        console.log("play beep");
-    } else {
-        beep.pause();
-        beep.currentTime = 0;
-    }
+		var beep = document.getElementById("beep");
+		if (sound) {
+				beep.play();
+				if (debug) console.log("play beep");
+		} else {
+				beep.pause();
+				beep.currentTime = 0;
+		}
 }
 
 /////////////  Update main timer display
 //  isWork: True: Session False: Break
 function updateTimer() {
-    console.log("UpdateTime: isWork:" + isWork);
+		if (debug) console.log("UpdateTime: isWork:" + isWork);
 
-    if (isWork == true) { /////// Update work/session time
-        console.log("updating work time");
-        if (pause) {
-            if (completed) {
-                time_left = session_time;
-                time_left = time_left < 10 ? "0" + time_left : time_left;
-                document.getElementById("time-left").innerHTML = time_left + ":00";
+		if (isWork == true) { /////// Update work/session time
+				if (debug) console.log("updating work time");
+				if (pause) {
+						if (completed) {
+								time_left = session_time;
+								time_left = time_left < 10 ? "0" + time_left : time_left;
+								document.getElementById("time-left").innerHTML = time_left + ":00";
 
-            }
-        } else {
-            if (completed)
-                time_left = session_time;
-                time_left = time_left < 10 ? "0" + time_left : time_left;
-            document.getElementById("time-left").innerHTML = time_left + ":00";
-        }
-    } else { //////// update Break time
-        console.log("updating break time");
-        if (pause) {
+						}
+				} else {
+						if (completed)
+								time_left = session_time;
+						time_left = time_left < 10 ? "0" + time_left : time_left;
+						document.getElementById("time-left").innerHTML = time_left + ":00";
+				}
+		} else { //////// update Break time
+				if (debug) console.log("updating break time");
+				if (pause) {
 
-            //  document.getElementById("time-left").innerHTML = break_time + ":00";
+						//  document.getElementById("time-left").innerHTML = break_time + ":00";
 
-        }
+				}
 
-    }
+		}
 }
 
 
@@ -143,92 +154,95 @@ function updateTimer() {
 /////////////  Main timer
 document.getElementById("start_stop").addEventListener("click", () => {
 
-    let txt = document.getElementById("start_stop").innerHTML;
-    console.log("pause=" + pause);
+		let txt = document.getElementById("start_stop").innerHTML;
+		if (debug) console.log("pause=" + pause);
 
-    if (txt == "Start") {
+		if (txt == "Start") {
 
-        pause = false;
-        console.log("Start pause=" + pause);
-        document.getElementById("timer-label").innerHTML = "Start Working";
-        document.getElementById("start_stop").innerHTML = "Pause";
-        startWork();
+				pause = false;
+				if (debug) console.log("Start pause=" + pause);
+				document.getElementById("timer-label").innerHTML = "Start Working";
+				document.getElementById("start_stop").innerHTML = "Pause";
+				startWork();
 
 
-    } else {
-        pause = true;
-        console.log("Else pause=" + pause);
+		} else {
+				pause = true;
+				if (debug) console.log("Else pause=" + pause);
 
-        clearInterval(clock);
+				clearInterval(clock);
 
-        document.getElementById("timer-label").innerHTML = "Timer Paused";
-        document.getElementById("start_stop").innerHTML = "Start";
-    }
+				document.getElementById("timer-label").innerHTML = "Timer Paused";
+				document.getElementById("start_stop").innerHTML = "Start";
+		}
 
 });
 
 
 document.getElementById("reset").addEventListener("click", () => {
-    clearInterval(clock);
-    playBeep(false);
+		clearInterval(clock);
+		playBeep(false);
 
-    session_time = 25;
-    break_time = 5;
-    pause = false;
-    completed = true;
-    time_left = session_time;
-    isWork = true;
+		session_time = 25;
+		break_time = 5;
+		pause = false;
+		completed = true;
+		time_left = session_time;
+		isWork = true;
 
 
-    document.getElementById("timer-label").innerHTML = "Start Timer";
-    document.getElementById("time-left").innerHTML = time_left + ":00";
-    document.getElementById("start_stop").innerHTML = "Start";
+		document.getElementById("timer-label").innerHTML = "Start Timer";
+		document.getElementById("time-left").innerHTML = time_left + ":00";
+		document.getElementById("start_stop").innerHTML = "Start";
 
-    document.getElementById("session-length").innerHTML = session_time;
-    document.getElementById("break-length").innerHTML = break_time;
+		document.getElementById("session-length").innerHTML = session_time + " mins";
+		document.getElementById("break-length").innerHTML = break_time;
 
 });
 
 
 /////////////  Session time adjust (inc/dec) ///////////////////////////
 document.getElementById("session-increment").addEventListener("click", () => {
-    console.log("sess inc: completed=" + completed + " pause=" + pause);
-    console.log("sess time=" + session_time + "  time_left=" + time_left);
+		if (debug){
+				console.log("sess inc: completed=" + completed + " pause=" + pause);
+				console.log("sess time=" + session_time + "  time_left=" + time_left);
+		}
 
-    session_time++;
-    if (session_time > 60) session_time = 60;
-    document.getElementById("session-length").innerHTML = session_time;
+		session_time++;
+		if (session_time > 60) session_time = 60;
+		document.getElementById("session-length").innerHTML = session_time + " mins";
 
-    updateTimer();
+		updateTimer();
 });
 
 
 document.getElementById("session-decrement").addEventListener("click", () => {
+		if (debug){
+				console.log("sess dec: completed=" + completed + " pause=" + pause);
+				console.log("sess time=" + session_time + "  time_left=" + time_left);
+		}
 
-    console.log("sess dec: completed=" + completed + " pause=" + pause);
-    console.log("sess time=" + session_time + "  time_left=" + time_left);
+		session_time--;
+		if (session_time <= 0) session_time = 1;
+		document.getElementById("session-length").innerHTML = session_time + " mins";
 
-    session_time--;
-    if (session_time <= 0) session_time = 1;
-    document.getElementById("session-length").innerHTML = session_time;
-
-    updateTimer();
+		updateTimer();
 });
 
 /////////////  Break time adjust (inc/dec) ///////////////////////////
 document.getElementById("break-increment").addEventListener("click", () => {
-    break_time++;
-    if (break_time > 60) break_time = 60;
-    document.getElementById("break-length").innerHTML = break_time;
+		break_time++;
+		if (break_time > 60) break_time = 60;
+		document.getElementById("break-length").innerHTML = break_time + " mins";
 
-    updateTimer();
+		updateTimer();
 });
 
 
 document.getElementById("break-decrement").addEventListener("click", () => {
-    break_time--;
-    if (break_time <= 0) break_time = 1;
-    document.getElementById("break-length").innerHTML = break_time;
+		break_time--;
+		if (break_time <= 0) break_time = 1;
+		document.getElementById("break-length").innerHTML = break_time + " mins";
 
-    updateTimer();
+		updateTimer();
 });
